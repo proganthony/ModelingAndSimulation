@@ -45,12 +45,11 @@ class Ball:
     def draw(self, window):
         pygame.draw.circle(window, self.color, [self.x, self.y], self.size)
 
-list_of_balls = [Ball(random.randint(0,100), random.randint(0,100)),
-                 Ball(random.randint(0,100), random.randint(0,100)),
-                Ball(random.randint(0,100), random.randint(0,100)),
-                Ball(random.randint(0,100), random.randint(0,100)),
-                Ball(random.randint(0,100), random.randint(0,100)),
-                Ball(random.randint(0,100), random.randint(0,100))]
+mother_ball=Ball(50,300)
+
+list_of_balls = [Ball(115,280),
+                Ball(100,300),
+                Ball(115,320)]
 
 
 
@@ -70,8 +69,8 @@ while True:
     if (pygame.mouse.get_pressed()[0] == True):
         for ball in list_of_balls:
             #move to origin
-            origin_mouse_x = mouse_pos[0] - ball.x
-            origin_mouse_y = mouse_pos[1] - ball.y
+            origin_mouse_x = mouse_pos[0] - mother_ball.x
+            origin_mouse_y = mouse_pos[1] - mother_ball.y
             #find distance to origin (pythagorean)
             distance = math.sqrt(origin_mouse_x * origin_mouse_x + origin_mouse_y * origin_mouse_y)
 
@@ -84,10 +83,14 @@ while True:
             #normal_mouse_y *=-1
 
             #move ball away from cursor, using the inverted normal
-            ball.velocity_x += normal_mouse_x * 2.5
-            ball.velocity_y += normal_mouse_y * 2.5
+            #ball.velocity_x += normal_mouse_x * 2.5
+            #ball.velocity_y += normal_mouse_y * 2.5
+            mother_ball.velocity_x+=normal_mouse_x*2.5
+            mother_ball.velocity_y+=normal_mouse_y*2.5
 
-    for ball in list_of_balls:    
+    for ball in list_of_balls:
+        mother_ball.update()
+        mother_ball.draw(window)
         ball.update()
         ball.draw(window)
 
